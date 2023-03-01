@@ -31,10 +31,10 @@ class get_dataset(Dataset):
     
 transforms = transforms.Compose([
     transforms.Resize([224, 224]),  # 将输入图片resize成统一尺寸224 224
-    # transforms.RandomRotation(degrees=(-10, 10)),  # 随机旋转，-10到10度之间随机选
-    # transforms.RandomHorizontalFlip(p=0.5),  # 随机水平翻转 选择一个概率概率
-    # transforms.RandomVerticalFlip(p=0.5),    # 随机垂直翻转
-    # transforms.RandomPerspective(distortion_scale=0.6, p=1.0), # 随机视角
+    transforms.RandomRotation(degrees=(-10, 10)),  # 随机旋转，-10到10度之间随机选
+    transforms.RandomHorizontalFlip(p=0.5),  # 随机水平翻转 选择一个概率概率
+    transforms.RandomVerticalFlip(p=0.5),    # 随机垂直翻转
+    transforms.RandomPerspective(distortion_scale=0.6, p=1.0), # 随机视角
     # transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5)),  # 随机选择的高斯模糊模糊图像
     transforms.ToTensor(),  # 将PIL Image或numpy.ndarray转换为tensor，并归一化到[0,1]之间
     transforms.Normalize(   # 标准化处理-->转换为标准正太分布（高斯分布），使模型更容易收敛
@@ -102,7 +102,7 @@ print(model)
 loss_function = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 10
+epochs = 25
 train_loss_list = []
 train_acc_list = []
 best_model_wts = copy.deepcopy(model.state_dict())
@@ -141,6 +141,7 @@ plt.plot(range(1, epochs+1), np.array(train_acc_list), color='red',
 plt.legend()  # 凡例
 plt.show()  # 表示
 
+print("***************Valid start***************")
 v_loss,  v_corr = 0.0, 0.0      
 model.eval()
 with torch.no_grad():
@@ -153,11 +154,12 @@ with torch.no_grad():
         
     print('Valid Loss: {:.4f} Accuracy: {:.4f}%'.format(v_loss / len(valid_loader.dataset),
                                                        (v_corr / len(valid_loader.dataset)) * 100))
-        
+
+print("***************Test start***************")       
 test_path = './kaggle/inputs/test'
 # get dataset
 test_data = get_dataset(test_path, transform=transforms)
-print(len(test_data))
+# print(len(test_data))
 test_loader = DataLoader(test_data, batch_size=32)
 _loss, _corr = 0.0, 0.0
 model.eval()
