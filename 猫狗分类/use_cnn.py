@@ -1,6 +1,4 @@
-import os
 import copy
-import json
 import numpy as np
 from PIL import Image
 from pathlib import Path
@@ -32,7 +30,7 @@ class get_dataset(Dataset):
         return img, torch.tensor(label, dtype=torch.int64)
     
 transforms = transforms.Compose([
-    transforms.Resize([224, 224]),  # 将输入图片resize成统一尺寸
+    transforms.Resize([224, 224]),  # 将输入图片resize成统一尺寸224 224
     # transforms.RandomRotation(degrees=(-10, 10)),  # 随机旋转，-10到10度之间随机选
     # transforms.RandomHorizontalFlip(p=0.5),  # 随机水平翻转 选择一个概率概率
     # transforms.RandomVerticalFlip(p=0.5),    # 随机垂直翻转
@@ -63,20 +61,27 @@ class CNN(nn.Module):
         super(CNN, self).__init__()
         self.conv1 = nn.Sequential(
             nn.Conv2d(3, 32, 3),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2)
         )
         self.conv2 = nn.Sequential(
             nn.Conv2d(32, 64, 3),
+            nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2)
         )
         self.conv3 = nn.Sequential(
             nn.Conv2d(64, 128, 3),
+            nn.BatchNorm2d(128),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2)
         )
-        self.fc1 = nn.Linear(128*26*26, 512)
+        self.fc1 = nn.Sequential(
+            nn.Linear(128*26*26, 512),
+            nn.BatchNorm1d(512),
+            nn.ReLU()
+        )
         self.fc2 = nn.Linear(512, 2)
         
     def forward(self, x):
@@ -95,13 +100,11 @@ model.to(device)
 print(model)
 
 loss_function = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-epochs = 5
-# best_acc = 0
+epochs = 10
 train_loss_list = []
 train_acc_list = []
-# filename = './model/checkpoint.pth'
 best_model_wts = copy.deepcopy(model.state_dict())
 
 for epoch in range(epochs):
@@ -121,20 +124,11 @@ for epoch in range(epochs):
         optimizer.step()
         t_loss += loss.item() * inputs.size(0)
         t_corr += torch.sum(preds.argmax(1) == labels) 
-        # if t_corr > best_acc:
-        #     best_model_wts = copy.deepcopy(model.state_dict())
-        #     state = {
-        #         'state_dict': model.state_dict(),
-        #         'best_acc': best_acc,
-        #         'optimizer': optimizer.state_dict(),
-        #     }
-        #     torch.save(state, filename)
     train_loss = t_loss / len(train_loader.dataset)
     train_acc = t_corr.cpu().numpy() / len(train_loader.dataset)
     train_loss_list.append(train_loss)
     train_acc_list.append(train_acc)  
     print('Train Loss: {:.4f} Accuracy: {:.4f}%'.format(train_loss, train_acc * 100))
-    # model.load_state_dict(best_model_wts)
     
 plt.figure()
 plt.title('Train Loss and Accuracy')
@@ -174,7 +168,7 @@ with torch.no_grad():
         y = model(inputs)
         preds = y.argmax(1)
         _loss += loss.item() * inputs.size(0)
-        _corr += torch.sum(preds== labels)
+        _corr += torch.sum(preds == labels)
 
     print('Test Loss: {:.4f} Accuracy: {:.4f}%'.format(_loss / len(test_loader.dataset),
                                                        (_corr / len(test_loader.dataset)) * 100))
