@@ -1,3 +1,4 @@
-## PyTorch深度学习项目实战
-- LSTM时间序列股票预测
-- CNN猫狗分类
+## PyTorch Deep Learning Project List
+- Cats-vs-Dogs: https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset/code
+- Classify Leaves: https://www.kaggle.com/competitions/classify-leaves/code
+- LSTM time series stock prediction
