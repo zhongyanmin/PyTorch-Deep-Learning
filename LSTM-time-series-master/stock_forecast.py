@@ -1,12 +1,9 @@
 # coding: utf-8
-import pandas            as pd
+import pandas as pd
 import torch
 from torch import nn
-from torch import functional as F
-import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
-import numpy             as np
-# from numpy.random          import seed
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error
