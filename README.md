@@ -4,3 +4,4 @@
 - Classify Leaves: https://www.kaggle.com/competitions/classify-leaves/code
 - LSTM time series stock prediction
 - MNIST digital recognition
+- Recognize Pokemon
