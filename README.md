@@ -2,7 +2,8 @@
 - CIFAR10 (https://www.kaggle.com/competitions/cifar-10)
 - Classify Cats and Dogs (https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset/code)
 - Classify Leaves (https://www.kaggle.com/competitions/classify-leaves/code)
-- Wildlife Classification (https://wqu.namespace.im/launch/93bb5681-1d03-4216-97c1-024c5a25ebd0?page=1)
+- Wildlife Classification (https://learn.wqu.edu/my-path/courses/ai-lab01)
+- Crop Disease in Uganda (https://learn.wqu.edu/my-path/courses/ai-lab02)
 - LSTM time series stock prediction
 - MNIST digital recognition
 - Recognize Pokemon
