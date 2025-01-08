@@ -4,6 +4,7 @@
 - Classify Leaves (https://www.kaggle.com/competitions/classify-leaves/code)
 - Wildlife Classification (https://learn.wqu.edu/my-path/courses/ai-lab01)
 - Crop Disease in Uganda (https://learn.wqu.edu/my-path/courses/ai-lab02)
+- Traffic Monitoring in Bangladesh (https://learn.wqu.edu/my-path/courses/3-traffic-monitoring-in-bangladesh)
 - LSTM time series stock prediction
 - MNIST digital recognition
 - Recognize Pokemon
