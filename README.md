@@ -6,6 +6,7 @@
 - Crop Disease in Uganda (https://learn.wqu.edu/my-path/courses/ai-lab02)
 - Traffic Monitoring in Bangladesh (https://learn.wqu.edu/my-path/courses/3-traffic-monitoring-in-bangladesh)
 - Celebrity Sightings in India (https://learn.wqu.edu/my-path/courses/4-celebrity-sightings-in-india)
+- Medical Data in Spain (https://learn.wqu.edu/my-courses/courses/5-medical-data-in-spain)  
 - LSTM time series stock prediction
 - MNIST digital recognition
 - Recognize Pokemon
